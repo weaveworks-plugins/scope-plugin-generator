@@ -1,0 +1,53 @@
+# You need to setup the DOCKER_USER, DOCKER_EMAIL, and DOCKER_PASS
+# environment variables in the circleci project page.
+# DOCKER_ORGANIZATION is needed only for forks.
+# DEPLOY_BRANCH is used to do automatically deployment.
+# CIRCLE_BRANCH is the name of the Git branch being tested.
+general:
+  branches:
+    ignore:
+      - gh-pages
+
+machine:
+  services:
+    - docker
+  environment:
+    GOPATH: /home/ubuntu
+    SRCDIR: /home/ubuntu/{{cookiecutter.docker_repo}}
+    PATH: $PATH:$HOME/.local/bin
+
+dependencies:
+  cache_directories:
+    - "~/docker"
+  override:
+    - echo "no dependencies"
+
+test:
+  override:
+    - cd $SRCDIR && make .{{cookiecutter.docker_repo}}.uptodate && docker tag {{cookiecutter.docker_organization}}/{{cookiecutter.docker_repo}} {{cookiecutter.docker_organization}}/{{cookiecutter.docker_repo}}:$(./tools/image-tag):
+        parallel: false
+        timeout: 300
+
+deployment:
+  hub:
+    branch: master
+    commands:
+      - |
+        test -z "${DOCKER_USER}" || (
+          docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS &&
+          (test "${DOCKER_ORGANIZATION:-$DOCKER_USER}" == "{{cookiecutter.docker_organization}}" || (
+            docker tag {{cookiecutter.docker_organization}}/{{cookiecutter.docker_repo}}:latest ${DOCKER_ORGANIZATION:-$DOCKER_USER}/{{cookiecutter.docker_repo}}:latest &&
+            docker tag {{cookiecutter.docker_organization}}/{{cookiecutter.docker_repo}}:$(./tools/image-tag) ${DOCKER_ORGANIZATION:-$DOCKER_USER}/{{cookiecutter.docker_repo}}:$(./tools/image-tag)
+          )) &&
+          docker push ${DOCKER_ORGANIZATION:-$DOCKER_USER}/{{cookiecutter.docker_repo}} &&
+          docker push ${DOCKER_ORGANIZATION:-$DOCKER_USER}/{{cookiecutter.docker_repo}}:$(./tools/image-tag)
+        )
+  hub-dev:
+    branch: /^((?!master).)*$/  # not the master branch
+    commands:
+      - >
+        test -z "${DEPLOY_BRANCH}" || test -z "${DOCKER_USER}" || (
+          docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS &&
+          docker tag {{cookiecutter.docker_organization}}/{{cookiecutter.docker_repo}}:latest ${DOCKER_ORGANIZATION:-$DOCKER_USER}/{{cookiecutter.docker_repo}}:${CIRCLE_BRANCH//\//-} &&
+          docker push ${DOCKER_ORGANIZATION:-$DOCKER_USER}/{{cookiecutter.docker_repo}}:${CIRCLE_BRANCH//\//-}
+        )

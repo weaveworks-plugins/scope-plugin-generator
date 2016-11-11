@@ -1,0 +1,17 @@
+{
+  "maintainer_organization": "Awesome Company",
+  "maintainer_email": "awesome-email@example.com",
+  "project_name": "Scope Awesome Plugin",
+  "project_root_dir_name": "scope-awesome-plugin",
+  "project_short_description": "This Golang boilerplate plugin for Weave Scope is a boilerplate plugin to help you quickly create your own Weave Scope plugin.",
+  "version": "0.1.0",
+  "open_source_license": ["MIT license", "BSD license", "ISC license", "Apache Software License 2.0", "GNU General Public License v3", "Not open source"],
+  "golang_version": "1.6",
+  "plugin_id": "awesome-plugin-id",
+  "plugin_name": "Awesome Plugin",
+  "plugin_description": "The {{cookiecutter.plugin_name}} does awesome things",
+  "docker_organization": "dockerorg",
+  "docker_username": "dockeruser",
+  "docker_email": "dockeremail",
+  "docker_repo": "scope-awesome-plugin"
+}
