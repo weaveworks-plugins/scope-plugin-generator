@@ -20,7 +20,7 @@ $(UPTODATE): $(EXE) Dockerfile
 	touch $@
 
 $(EXE): main.go
-	$(SUDO) docker run --rm -v "$$PWD":/usr/src/$(EXE) -w /usr/src/$(EXE) golang:{{cookiecutter.golang_version}} go build -v
+	$(SUDO) docker run --rm -v "$$PWD":/usr/src/$(EXE) -w /usr/src/$(EXE) golang:1.6 go build -v
 
 clean:
 	- rm -rf $(UPTODATE) $(EXE)
