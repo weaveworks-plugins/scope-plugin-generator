@@ -1,10 +1,10 @@
 {
-  "maintainer_organization": "Awesome Company",
-  "maintainer_email": "awesome-email@example.com",
   "project_name": "Scope Awesome Plugin",
   "plugin_id": "awesome-plugin-id",
   "plugin_name": "Awesome Plugin",
   "plugin_description": "The {{cookiecutter.plugin_name}} does awesome things",
+  "maintainer_organization": "Awesome Company",
+  "maintainer_email": "awesome-email@example.com",
   "docker_organization": "dockerorg",
   "docker_username": "dockeruser",
   "docker_email": "dockeremail",

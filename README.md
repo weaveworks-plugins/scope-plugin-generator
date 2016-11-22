@@ -7,18 +7,24 @@ You can start developing your own Scope plugins in less then 5 minutes by just f
 To generate your own plugin you will need Cookiecutter, you can install it following these [instructions](https://cookiecutter.readthedocs.io/en/latest/installation.html).
 
 After you have installed Cookiecutter, you can create a basic Scope plugin structure using the following command: `cookiecutter https://github.com/weaveworks-plugins/scope-plugin-generator`.
-You will be prompted to insert the following basic information about your plugin:
+You will be prompted to insert the following basic information about your plugin.
 
-- `maintainer_organization` - maintainer's organization name.
-- `maintainer_email` - maintainer's email address.
+Mandatory attributes to generate a working plugin:
 - `project_name` - project name.
 - `plugin_id` - plugin id, for more information check Weave Scope [documentation](https://www.weave.works/documentation/scope-latest-plugins/#plugin-id).
 - `plugin_name` - plugin name, this will be visible in the Scope UI.
+
+Optional attributes:
 - `plugin_description` - a brief description of the plugin.
+- `maintainer_organization` - maintainer's organization name.
+- `maintainer_email` - maintainer's email address.
 - `docker_organization` - docker organization name.
 - `docker_username` - docker username.
 - `docker_email` - docker user's email address.
 - `docker_repo` - docker repository name.
+
+The maintainer and docker attributes are used for setting up the `circle.yml` file and to properly tag docker images.
+They are not necessary to generate a working plugin, for simplicity you can use the default values.
 
 The configuration file for the bootstrapping process is [cookiecutter.json](cookiecutter.json).
 
