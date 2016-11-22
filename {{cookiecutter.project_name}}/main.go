@@ -303,6 +303,7 @@ func (p *Plugin) Report(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	raw, err := json.Marshal(*rpt)
+	//fmt.Println(string(raw))
 	if err != nil {
 		log.Printf("error: %v", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -349,6 +350,7 @@ func (p *Plugin) Control(w http.ResponseWriter, r *http.Request) {
 	}
 	res := response{ShortcutReport: rpt}
 	raw, err := json.Marshal(res)
+	//fmt.Println(string(raw))
 	if err != nil {
 		log.Printf("error: %v", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
